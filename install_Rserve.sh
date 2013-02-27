@@ -31,8 +31,6 @@ execute_cmd_on_nodes_n_collect_error_log "r_install" "R CMD INSTALL /tmp/rJava_0
 execute_cmd_on_nodes_n_collect_error_log "r_install" "R CMD INSTALL /tmp/Rserve_0.6-8.tar.gz" "installing RServe on datanodes..." "${ALLNODES[@]}" "$MASTER_LOG_FILE"
 
 
-update_on_nodes_n_collect_error_log "r_install" "R CMD INSTALL /tmp/Rserve_0.6-8.tar.gz" "update /etc/profile on datanodes..." "${ALLNODES[@]}" "$MASTER_LOG_FILE"
-
 copy_data_to_nodes_n_collect_error_log "r_install" "./data/Rserv.conf" "/etc/" "copy RServ.conf to datanodes /etc/..." "${ALLNODES[@]}" "$MASTER_LOG_FILE"
 
 update_profile "${DATANODES[@]}"

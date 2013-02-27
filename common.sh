@@ -33,10 +33,10 @@ verify_component()
                 fi
         done
 
-        if [ "$OK_FLAG" = "0" ]; then
+        if [ "$OK_FLAG" = "1" ]; then
               echo "All components are OK"
         else
-              echo "components varification Failed"
+              echo "some components varification Failed"
               OK_FLAG=0
         fi
 }
@@ -121,7 +121,7 @@ MASTER_LOCAL_LOG_FILE=$2
 for line in $1
 do
 	echo "shut down Rserve deamon on "$line
-	ssh $line 'kill `ps -ef | grep Rserve | grep -v grep | awk '\''{print $2}'\''` 2>&1' >> $MASTER_LOCAL_LOG_FILE
+	ssh $line 'kill `ps -ef | grep "/bin/Rserve --vanilla" | grep -v grep | awk '\''{print $2}'\''` 2>&1' >> $MASTER_LOCAL_LOG_FILE
 done
 } 
 

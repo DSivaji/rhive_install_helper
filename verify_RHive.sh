@@ -1,11 +1,29 @@
 #/bin/bash
 
-source nodes.sh
-source common.sh
+#source nodes.sh
+#source common.sh
 source version.sh
 
-RN_ck_FILE=$RN"tmp".log
 
+./check_thrift.sh
+if [ $? == "1" ]; then
+        exit 1
+fi
+
+./check_hadoop.sh
+if [ $? == "1" ]; then
+        exit 1
+fi
+
+./check_hive.sh
+if [ $? == "1" ]; then
+        exit 1
+fi
+
+
+
+RN_ck_FILE=$RN"tmp".log
+echo " "
 echo "checking RHive Hive integration - UDF functions ..."
 
 Rscript -e 'tmp_table_name<-sample(1:1000000, 1);tmp_table_name<-paste("tmp_",tmp_table_name,sep="");library(RHive);rhive.connect();rhive.write.table(tablename=tmp_table_name,USArrests);sumCrimes <- function(column1, column2, column3) {return(1)};rhive.assign("sumCrimes", sumCrimes);rhive.export("sumCrimes");rhive.query(paste("SELECT sum(R(\"sumCrimes\", murder, assault, rape, 0.0)) FROM ",tmp_table_name, " limit 1",sep=""));rhive.drop.table(tmp_table_name)'  > $RN_ck_FILE 2> /dev/null
