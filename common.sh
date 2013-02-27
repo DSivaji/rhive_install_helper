@@ -153,3 +153,14 @@ done
 }
 
 
+check_root()
+{
+
+#check pre requirement
+IAM=`whoami`
+if [ "$IAM" != "root" ]; then
+        echo "please run as root user"
+        exit 1
+fi
+	exit 0
+}
