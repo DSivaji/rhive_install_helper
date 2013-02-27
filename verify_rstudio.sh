@@ -1,3 +1,4 @@
+mkdir -p tmp
 cd tmp
 
 rm -f *.ht*
