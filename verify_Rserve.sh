@@ -21,14 +21,14 @@ do
         if [ "$RSERVE_PORT" = "6311" ]; then
               echo "deamon is running - SUCCESS"
         else
-              echo "deamon is not running - FAILED"
+              echo "deamon is not running - ${txtred}FAILED${txtrst}"
         fi
 
 
         if [ "$RSERVE_VER" == "$Rserve_version" ]; then
               echo ""
         else
-              echo "Rserve_version is not matched - FAILED"
+              echo "Rserve_version is not matched - ${txtred}FAILED${txtrst}"
         fi  
 
 

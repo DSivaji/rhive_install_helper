@@ -1,3 +1,5 @@
+source color.sh
+
 RN=$RANDOM
 
 #install local R
@@ -26,17 +28,17 @@ verify_component()
                 ssh $line $EXECUTE_CMD "2>&1;echo $? >"$NODE_WORK_LOG_FILE >>"$MASTER_LOCAL_LOG_FILE"
                 RES=`ssh $line "cat "$NODE_WORK_LOG_FILE`
                 if [ "$RES" = "0" ]; then
-                        echo "OK"
+                        echo "${txtgrn}OK${txtrst}"
                 else
-                        echo "FAILED"
+                        echo "${txtred}FAILED${txtrst}"
                         OK_FLAG=0
                 fi
         done
 
         if [ "$OK_FLAG" = "1" ]; then
-              echo "All components are OK"
+              echo "${txtgrn}All components are OK${txtrst}"
         else
-              echo "some components varification Failed"
+              echo "${txtred}some components varification Failed${txtrst}"
               OK_FLAG=0
         fi
 }
@@ -68,9 +70,9 @@ execute_cmd_on_nodes_n_collect_error_log()
 		ssh $line "$EXECUTE_CMD" "2>&1;echo $? >"$NODE_WORK_LOG_FILE >>"$MASTER_LOCAL_LOG_FILE"
 		RES=`ssh $line "cat "$NODE_WORK_LOG_FILE`
 		if [ "$RES" = "0" ]; then
-			echo "SUCCESS"
+			echo "${txtgrn}SUCCESS${txtrst}"
 		else
-			echo "FAILED"
+			echo "${txtred}FAILED${txtrst}"
 		fi
 #ssh $line "R CMD Rserve --no-save;ps -ef | grep Rserv "
 	done
@@ -95,9 +97,9 @@ copy_data_to_nodes_n_collect_error_log()
       scp $TARGET $line:$DEST 2>>$MASTER_LOCAL_LOG_FILE  1>> "$MASTER_LOCAL_LOG_FILE"
 		RES=$?
       if [ "$RES" = "0" ]; then
-         echo "SUCCESS"
+	 echo "${txtgrn}SUCCESS${txtrst}"
       else
-         echo "FAILED"
+	 echo "${txtred}FAILED${txtrst}"
       fi
 #ssh $line "R CMD Rserve --no-save;ps -ef | grep Rserv "
    done
@@ -159,7 +161,7 @@ check_root()
 #check pre requirement
 IAM=`whoami`
 if [ "$IAM" != "root" ]; then
-        echo "please run as root user"
+        echo "${txtred}please run as root user${txtrst}"
         exit 1
 fi
 	exit 0

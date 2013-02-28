@@ -9,7 +9,7 @@ Rscript -e "R.home(component='home')"
                 if [ "$?" = "0" ]; then
                         echo "OK"
                 else
-                        echo "FAILED"
+                        echo "${txtred}FAILED${txtrst}"
                 fi
 
 verify_component "R" "Rscript -e \"R.home(component='home')\"" "verify R component..." "${DATANODES[@]}" "working.log"

@@ -1,7 +1,6 @@
-#/bin/bash
-
 #source nodes.sh
 #source common.sh
+source color.sh
 source version.sh
 
 
@@ -33,9 +32,11 @@ Rscript -e 'tmp_table_name<-sample(1:1000000, 1);tmp_table_name<-paste("tmp_",tm
 	#echo "return for UDF "$RES2
 
         if [ "$RES2" == "50" ]; then
-              echo "RHive UDF function is working - OK"
+              echo -e "RHive UDF function is working - OK}"
         else
-              echo "RHive UDF is not working - FAILED"
+		tput setaf 1
+              echo -e "RHive UDF is not working - FAILED"
+		tput sgr0
         fi
 
         rm $RN_ck_FILE
@@ -47,9 +48,11 @@ Rscript -e "tmp_table_name<-sample(1:1000000, 1);tmp_table_name<-paste('tmp_',tm
         RES2=`cat $RN_ck_FILE`
 
         if [ "$RES2" == "1247" ]; then
-              echo "RHive hive Query function is working - OK"
+              echo -e "RHive hive Query function is working - ${txtgrn}OK${txtrst}"
         else
-              echo "RHive Query is not working - FAILED"
+		tput setaf 1
+              echo -e "RHive Query is not working - ${txtred}FAILED${txtrst}"
+		tput sgr0
         fi  
 
 	rm $RN_ck_FILE

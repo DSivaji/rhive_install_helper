@@ -1,3 +1,5 @@
+source color.sh
+
 mkdir -p tmp
 cd tmp
 
@@ -8,9 +10,9 @@ echo "verify rstudio component..."
 CK=`ls *.ht*| wc -l`
 rm -f *.ht*
 if [ "$CK" = "1" ]; then
-      echo "SUCCESS"
+      echo "${txtgrn}SUCCESS${txtrst}"
 else
-      echo "FAILED"
+      echo "${txtred}FAILED${txtrst}"
 fi
 
 
