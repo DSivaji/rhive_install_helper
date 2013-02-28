@@ -45,8 +45,8 @@ Rscript -e 'tmp_table_name<-sample(1:1000000, 1);tmp_table_name<-paste("tmp_",tm
 
 
 echo "checking RHive Hive integration - Normal Query ..."
-Rscript -e "tmp_table_name<-sample(1:1000000, 1);tmp_table_name<-paste('tmp_',tmp_table_name,sep='');library(RHive);rhive.connect("$THRIFT_ADDRESS");rhive.write.table(tablename=tmp_table_name,USArrests);tmp <- rhive.size.table(tmp_table_name);cat(tmp);rhive.drop.table(tmp_table_name);" 2> /dev/null | tail -n 1 > $RN_ck_FILE
 	
+Rscript -e "tmp_table_name<-sample(1:1000000, 1);tmp_table_name<-paste('tmp_',tmp_table_name,sep='');library(RHive);rhive.connect("$THRIFT_ADDRESS");rhive.write.table(tablename=tmp_table_name,USArrests);tmp <- rhive.size.table(tmp_table_name);cat(tmp);rhive.drop.table(tmp_table_name);" 2> /dev/null | tail -n 1 > $RN_ck_FILE
         RES2=`cat $RN_ck_FILE`
 
         if [ "$RES2" == "1247" ]; then
