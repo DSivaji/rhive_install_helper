@@ -19,7 +19,7 @@ do
         RSERVE_VER=`cat $RN_ck_VER`
 
         if [ "$RSERVE_PORT" = "6311" ]; then
-              echo "deamon is running - SUCCESS"
+              echo "deamon is running - ${txtgrn}SUCCESS${txtrst}"
         else
               echo "deamon is not running - ${txtred}FAILED${txtrst}"
         fi

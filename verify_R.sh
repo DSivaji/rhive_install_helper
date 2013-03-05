@@ -7,7 +7,7 @@ echo "verify R component... at localhost "
 Rscript -e "R.home(component='home')"
 
                 if [ "$?" = "0" ]; then
-                        echo "OK"
+                        echo "${txtgrn}OK${txtrst}"
                 else
                         echo "${txtred}FAILED${txtrst}"
                 fi
