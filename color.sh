@@ -1,3 +1,4 @@
+txtred=`tput setaf 1` # Red
 txtgrn=`tput setaf 2` # Green
 txtylw=`tput setaf 3` # Yellow
 txtblu=`tput setaf 4` # Blue
