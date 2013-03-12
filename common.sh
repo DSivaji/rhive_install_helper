@@ -44,6 +44,58 @@ verify_component()
 }
 
 
+#only used for yum
+execute_parallel_cmd_on_nodes_n_collect_error_log()
+{
+#r_install
+        TARGET_DATA=$1
+#yum install R -y
+   EXECUTE_CMD=$2
+#installing R on..
+   MSG=$3
+#slave1 slave2
+   NODES=$4
+
+        MASTER_LOCAL_LOG_FILE=$5
+
+        NODE_WORK_LOG_FILE="/tmp/"$TARGET_DATA""$RN".log"
+
+        #echo "echo on execute_cmd_on_nodes_n:"$TARGET_DATA" "$EXECUTE_CMD" "$MSG" "$NODES" "$NODE_WORK_LOG_FILE" "$MASTER_LOCAL_LOG_FILE
+        #echo "echo on execute_cmd_on_nodes_n:"$1" "$2" "$3" "$4" "$5
+
+        for line in $NODES
+        do
+                echo $MSG" "$line
+                echo $MSG" "$line>>"$MASTER_LOCAL_LOG_FILE"
+                ssh -f $line "$EXECUTE_CMD 2>&1" >> $NODE_WORK_LOG_FILE"_"$line #>>"$MASTER_LOCAL_LOG_FILE"
+#ssh $line "R CMD Rserve --no-save;ps -ef | grep Rserv "
+        done
+
+while true
+do
+        CK=0;
+        for line in $NODES
+        do
+                RES=`tail -n 20 $NODE_WORK_LOG_FILE"_"$line | grep "already installed"`
+                RES2=`tail -n 20 $NODE_WORK_LOG_FILE"_"$line | grep "Complete"`
+                if [[ $RES || $RES2 ]]; then
+                        echo "$line : ${txtgrn}SUCCESS${txtrst}"
+                else
+                        CK=1;
+                        echo -n "$line : "
+                        tail -n 1 $NODE_WORK_LOG_FILE"_"$line
+                fi
+        done
+                if [ "$CK" = "0" ]; then
+                        break;
+                fi
+        sleep 2
+        clear
+done
+
+        echo "all done.!"
+
+}
 
 execute_cmd_on_nodes_n_collect_error_log()
 {
