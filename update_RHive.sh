@@ -1,2 +1,2 @@
-cd data
-git clone https://github.com/nexr/RHive.git
+./download_RHive.sh
+./install_RHive.sh
